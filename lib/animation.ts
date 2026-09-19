@@ -14,7 +14,7 @@ export function createACAnimation({root,camera,section,invalidate,width,height}:
  // Change distance, preserving the visitor's orbit direction. Never overwrite their yaw/pitch.
  camera.position.multiplyScalar(state.radius/camera.position.length());invalidate();};
  const reset=()=>{camera.position.set(0,2,distance).normalize().multiplyScalar(state.radius);camera.lookAt(0,0,0);invalidate();};section.addEventListener('ac-reset-view',reset);
- const timeline=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:section,start:'top top',end:()=>`+=${mobile?2300:3200}`,scrub:.8,pin:true,invalidateOnRefresh:true,anticipatePin:1},onUpdate:update});
+ const timeline=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:section,start:'top top',end:()=>`+=${mobile?2300:3200}`,scrub:.8,pin:true,pinSpacing:true,fastScrollEnd:true,invalidateOnRefresh:true,anticipatePin:1,onLeave:()=>section.setAttribute('data-scroll-complete','true'),onEnterBack:()=>section.removeAttribute('data-scroll-complete')},onUpdate:update});
  timeline.to(state,{p:1,duration:1},0).to(state,{radius:distance*.94,duration:.15},0);
  const stagger:Record<string,number>={Panel_Front:.15,Side_Left:.22,Side_Right:.22,Air_Grid:.25,Filter_Left:.31,Filter_Right:.31,Evaporator_Coil:.39,Blower_Fan:.47,Fan_Motor:.51,PCB:.56,Horizontal_Flap:.46,Flap_Motor:.53,Main_Chassis:.37};
  for(const p of parts){const offset=OFFSETS[p.name];const spread=mobile?.72:1;timeline.to(p.object.position,{x:p.position.x+offset[0]*spread,y:p.position.y+offset[1]*spread,z:p.position.z+offset[2]*spread,duration:.28},stagger[p.name]);}

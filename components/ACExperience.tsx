@@ -135,6 +135,7 @@ export default function ACExperience() {
             <span data-stage>01 / DESIGN INTEGRADO</span>
             <span>SPLIT / VISTA INTERATIVA</span>
           </div>
+          <a className="ac-continue" href="#componentes">Continuar pela experiência <ArrowDown size={15}/></a>
           <div className="ac-progress" aria-hidden="true">
             <div className="ac-progress-fill" />
           </div>

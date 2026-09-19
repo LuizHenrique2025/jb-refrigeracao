@@ -54,10 +54,9 @@ export default function Page() {
           </div>
           <div className="hero-copy">
             <p className="eyebrow">PRECISÃO TÉCNICA. CONFORTO DE VERDADE.</p>
-            <h1>
-              O clima ideal começa
-              <br />
-              com <em>quem entende.</em>
+            <h1 className="hero-title" aria-label="O clima ideal começa com quem entende.">
+              <span className="title-line"><span style={{"--delay":"0ms"} as React.CSSProperties}>O</span> <span style={{"--delay":"70ms"} as React.CSSProperties}>clima</span> <span style={{"--delay":"140ms"} as React.CSSProperties}>ideal</span> <span style={{"--delay":"210ms"} as React.CSSProperties}>começa</span></span>
+              <span className="title-line"><span style={{"--delay":"300ms"} as React.CSSProperties}>com</span> <em><span style={{"--delay":"370ms"} as React.CSSProperties}>quem</span> <span style={{"--delay":"440ms"} as React.CSSProperties}>entende.</span></em></span>
             </h1>
             <div className="hero-bottom">
               <p>
