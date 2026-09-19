@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { whatsapp } from "@/lib/content";
 import ACExperience from "@/components/ACExperience";
+import ContactForm from "@/components/ContactForm";
 export default function Page() {
   return (
     <>
@@ -162,27 +163,7 @@ export default function Page() {
           </div>
         </section>
         <section className="contact wrap" id="contato">
-          <p className="eyebrow">VAMOS CONVERSAR?</p>
-          <h2>
-            Seu ambiente merece
-            <br />
-            <em>um clima melhor.</em>
-          </h2>
-          <p>
-            Conte ao João o que você precisa.
-            <br />O próximo passo começa com uma conversa.
-          </p>
-          <a
-            className="button"
-            href={whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Pedir orçamento pelo WhatsApp <ArrowUpRight size={20} />
-          </a>
-          <a className="email" href="mailto:jbrarclimatizacao@gmail.com">
-            <Mail size={16} /> jbrarclimatizacao@gmail.com
-          </a>
+          <div className="contact-copy"><p className="eyebrow">VAMOS CONVERSAR?</p><h2>Seu ambiente merece<br/><em>um clima melhor.</em></h2><p>Conte ao João o que você precisa.<br/>O próximo passo começa com uma conversa.</p><a className="email" href="mailto:jbrarclimatizacao@gmail.com"><Mail size={16}/> jbrarclimatizacao@gmail.com</a></div><ContactForm />
         </section>
       </main>
       <footer className="wrap footer">

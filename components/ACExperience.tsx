@@ -8,7 +8,8 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, RotateCcw, Move3D, Hand } from "lucide-react";
+import ComponentExplorer from './ComponentExplorer';
 import { components } from "@/lib/content";
 const ACScene = dynamic(() => import("./ACScene"), {
   ssr: false,
@@ -67,6 +68,7 @@ export default function ACExperience() {
   const [section, setSection] = useState<HTMLElement | null>(null);
   const [ready, setReady] = useState(false);
   const [supported, setSupported] = useState(true);
+  const [touchRotation, setTouchRotation] = useState(false);
   const reduced = useSyncExternalStore(
     subscribeReduced,
     getReduced,
@@ -98,16 +100,16 @@ export default function ACExperience() {
   }, [section]);
   const simplified = reduced || !supported;
   return (
-    <section
+    <><section
       ref={setSection}
       id="tecnologia"
       className={`experience ${simplified ? "is-static" : "is-interactive"}`}
       aria-label="Tecnologia por dentro"
     >
       <div className="experience-heading">
-        <p className="eyebrow">UM NOVO OLHAR SOBRE O SEU CONFORTO</p>
-        <h2 data-experience-title>Tecnologia por dentro</h2>
-        <p data-experience-subtitle>Explore os componentes do sistema</p>
+        <p className="eyebrow">PRECISÃO QUE VOCÊ PODE VER</p>
+        <h2 data-experience-title>O conforto. Por dentro.</h2>
+        <p data-experience-subtitle>Role para desmontar. Suba para reconstruir.</p>
       </div>
       {simplified ? (
         <StaticView />
@@ -116,7 +118,7 @@ export default function ACExperience() {
           <div className="ac-canvas">
             {ready && section ? (
               <SceneBoundary onFailure={() => setSupported(false)}>
-                <ACScene section={section} />
+                <ACScene section={section} touchRotation={touchRotation} />
               </SceneBoundary>
             ) : (
               <div className="scene-loading" role="status">
@@ -124,25 +126,14 @@ export default function ACExperience() {
               </div>
             )}
           </div>
-          <div className="ac-label" aria-hidden="true">
-            <i />
-            <b />
-            <span />
-          </div>
-          <div className="ac-detail" aria-hidden="true">
-            <span className="micro" data-step>
-              01 / 05
-            </span>
-            <h3 data-part-title>Filtros</h3>
-            <p data-part-copy>{components[0].description}</p>
-          </div>
+          <div className="model-toolbar"><span className="desktop-orbit-hint"><Move3D size={16}/> Arraste para girar em 360°</span><button className="touch-orbit-toggle" type="button" aria-pressed={touchRotation} onClick={()=>setTouchRotation(v=>!v)}><Hand size={16}/>{touchRotation?'Voltar à rolagem':'Girar com o toque'}</button><button type="button" onClick={()=>section?.dispatchEvent(new CustomEvent('ac-reset-view'))}><RotateCcw size={14}/> Vista inicial</button></div>
           <div className="ac-scroll-hint" aria-hidden="true">
-            <span>ROLE PARA EXPLORAR</span>
+            <span>ROLE PARA DESMONTAR</span>
             <ArrowDown size={16} />
           </div>
           <div className="ac-bottom">
-            <span data-stage>01 — VISÃO DO CONJUNTO</span>
-            <span>MODELO ILUSTRATIVO · SPLIT</span>
+            <span data-stage>01 / DESIGN INTEGRADO</span>
+            <span>SPLIT / VISTA INTERATIVA</span>
           </div>
           <div className="ac-progress" aria-hidden="true">
             <div className="ac-progress-fill" />
@@ -166,6 +157,6 @@ export default function ACExperience() {
           3D requer JavaScript.
         </p>
       </noscript>
-    </section>
+    </section><ComponentExplorer reduced={reduced} supported={supported}/></>
   );
 }

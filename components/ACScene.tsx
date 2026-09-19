@@ -1,9 +1,10 @@
 "use client";
 import { Component, Suspense, useEffect, useRef, type ReactNode } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
+import { OrbitControls } from '@react-three/drei';
 import * as THREE from "three";
 import ACModel, { MockACModel, preloadACModel } from "./ACModel";
-import ACLabels from "./ACLabels";
+import StudioLighting from './StudioLighting';
 import ACLoading from "./ACLoading";
 import { createACAnimation } from "@/lib/animation";
 import { PART_NAMES } from "@/lib/model-config";
@@ -19,7 +20,7 @@ class ModelBoundary extends Component<
     return this.state.failed ? <MockACModel /> : this.props.children;
   }
 }
-function SceneContents({ section }: { section: HTMLElement }) {
+function SceneContents({ section, touchRotation }: { section: HTMLElement; touchRotation: boolean }) {
   const root = useRef<THREE.Group>(null);
   const light = useRef<THREE.DirectionalLight>(null);
   const { camera, size, invalidate, gl } = useThree();
@@ -59,12 +60,11 @@ function SceneContents({ section }: { section: HTMLElement }) {
   }, [gl, section]);
   return (
     <>
-      <ambientLight intensity={1.6} />
-      <hemisphereLight args={["#e9f3ff", "#a4aeb8", 1.3]} />
+      <StudioLighting />
       <directionalLight
         ref={light}
         position={[-5, 8, 7]}
-        intensity={3.3}
+        intensity={.7}
         castShadow={size.width > 640}
         shadow-mapSize={[1024, 1024]}
         shadow-camera-left={-12}
@@ -72,8 +72,8 @@ function SceneContents({ section }: { section: HTMLElement }) {
         shadow-camera-top={8}
         shadow-camera-bottom={-8}
         shadow-bias={-0.001}
+        shadow-radius={5}
       />
-      <directionalLight position={[6, 3, -4]} intensity={2.2} color="#b9d8ff" />
       <group ref={root}>
         <ModelBoundary>
           <Suspense fallback={<ACLoading />}>
@@ -89,11 +89,11 @@ function SceneContents({ section }: { section: HTMLElement }) {
         <planeGeometry args={[70, 70]} />
         <shadowMaterial opacity={0.1} />
       </mesh>
-      <ACLabels root={root} section={section} />
+      <OrbitControls makeDefault enablePan={false} enableZoom={false} enableDamping={false} rotateSpeed={.65} minPolarAngle={.15} maxPolarAngle={Math.PI-.15} enabled={touchRotation || !window.matchMedia('(pointer: coarse)').matches} onChange={()=>{section.setAttribute('data-orbit',camera.position.toArray().map(n=>n.toFixed(2)).join(','));invalidate();}} />
     </>
   );
 }
-export default function ACScene({ section }: { section: HTMLElement }) {
+export default function ACScene({ section, touchRotation=false }: { section: HTMLElement; touchRotation?:boolean }) {
   useEffect(() => preloadACModel(), []);
   return (
     <Canvas
@@ -107,7 +107,8 @@ export default function ACScene({ section }: { section: HTMLElement }) {
         gl.setClearColor("#f0f4f8", 0);
       }}
     >
-      <SceneContents section={section} />
+      <SceneContents section={section} touchRotation={touchRotation} />
     </Canvas>
   );
 }
+

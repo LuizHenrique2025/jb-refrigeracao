@@ -1,0 +1,9 @@
+'use client';
+import {useMemo,useEffect, useRef, type ComponentRef} from 'react';
+import {Canvas,useThree} from '@react-three/fiber';
+import {OrbitControls} from '@react-three/drei';
+import * as THREE from 'three';
+import {createStudioAC,disposeStudioAC} from '@/lib/ac-geometry';
+import StudioLighting from './StudioLighting';
+function Part({selected,reset,reduced}:{selected:string;reset:number;reduced:boolean}){const model=useMemo(()=>createStudioAC(),[]);const controls=useRef<ComponentRef<typeof OrbitControls>>(null);const {camera,size,invalidate}=useThree();useEffect(()=>()=>disposeStudioAC(model),[model]);useEffect(()=>{model.position.set(0,0,0);model.rotation.set(.1,-.22,0);model.children.forEach(p=>{p.visible=p.name===selected;});const object=model.getObjectByName(selected)!;model.updateMatrixWorld(true);const bounds=new THREE.Box3().setFromObject(object);const center=bounds.getCenter(new THREE.Vector3());const dimensions=bounds.getSize(new THREE.Vector3());model.position.sub(center);const perspective=camera as THREE.PerspectiveCamera;const tan=Math.tan(THREE.MathUtils.degToRad(perspective.fov/2));const distance=Math.max(dimensions.x/(size.width/size.height),dimensions.y)/(2*tan)*1.45+dimensions.z*.5;camera.position.set(0,.12*distance,distance);camera.lookAt(0,0,0);controls.current?.target.set(0,0,0);controls.current?.update();invalidate();},[model,selected,reset,camera,size.width,size.height,invalidate]);return <><StudioLighting/><primitive object={model}/><OrbitControls ref={controls} makeDefault enablePan={false} enableZoom={false} enableDamping={false} enabled={!reduced} rotateSpeed={.65}/></>;}
+export default function PartScene(props:{selected:string;reset:number;reduced:boolean}){return <Canvas frameloop="demand" dpr={[1,1.5]} camera={{fov:32,position:[0,1,14]}} gl={{alpha:true,antialias:true}} aria-label="Componente 3D que pode ser girado por arraste"><Part {...props}/></Canvas>;}
