@@ -83,6 +83,18 @@ Foram fornecidas imagens técnicas de:
 - vista explodida do controle remoto;
 - referência visual da animação durante a rolagem.
 
+### Galeria de referências
+
+![Desenho técnico da unidade interna](assets/unidade-interna-desenho-tecnico.png)
+
+![Vista explodida da unidade interna](assets/vista-explodida-unidade-interna.png)
+
+![Vista explodida da condensadora](assets/vista-explodida-condensadora.png)
+
+![Vista explodida do controle remoto](assets/vista-explodida-controle-remoto.png)
+
+![Referência da animação durante a rolagem](assets/referencia-animacao-scroll.png)
+
 Ainda serão adicionadas as fotos reais dos serviços e, se desejado, uma identidade visual ou logotipo da JB Refrigeração.
 
 ## Fases previstas
