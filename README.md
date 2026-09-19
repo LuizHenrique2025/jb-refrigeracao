@@ -2,6 +2,16 @@
 
 Documento inicial do projeto de presença digital da **JB Refrigeração**, de João Victor Brizolla da Rosa, técnico eletrotécnico e refrigerista.
 
+## Implementação — 19/09/2026
+
+A primeira versão da página está implementada com Next.js, React, TypeScript, Tailwind, React Three Fiber, Drei e GSAP ScrollTrigger. Inclui apresentação, serviços, responsável técnico, contato por WhatsApp e experiência 3D controlada pela rolagem, nos dois sentidos.
+
+O modelo atual é um mock genérico com 13 grupos nomeados e peças animadas em três eixos. Não é o GLB real. Sua substituição está documentada em [docs/MODEL.md](docs/MODEL.md). Há fallback estático para redução de movimento ou indisponibilidade de WebGL.
+
+Para executar: `npm ci` e `npm run dev`. Para validar: `npm run lint`, `npm run typecheck` e `npm run build`. O build gera `out/` para hospedagem estática. Consulte [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) para arquitetura e pendências de conteúdo. As imagens enviadas estão preservadas em `assets/` e as duas referências desta etapa em `public/references/`.
+
+**Retomada:** substituir o mock por GLB final se fornecido; adicionar fotos reais de serviços e o link confirmado do Instagram; confirmar domínio e telefone antes da divulgação pública. A integração com plataforma de automação do WhatsApp permanece como próxima fase; o link de conversa já está pronto.
+
 ## Sobre a empresa
 
 - **Serviços:** instalação e manutenção de ar-condicionado e manutenção de sistemas centrais de resfriamento.
