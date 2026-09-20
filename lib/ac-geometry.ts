@@ -7,8 +7,8 @@ type V3 = [number,number,number];
  * All dimensions share the same metre-like design space and assembled datum. */
 export function createStudioAC(): THREE.Group {
   const root = new THREE.Group(); root.name = 'AC_ROOT';
-  const plastic = new THREE.MeshPhysicalMaterial({color:'#f1f2f0',roughness:.24,metalness:0,clearcoat:.48,clearcoatRoughness:.25});
-  const inside = new THREE.MeshStandardMaterial({color:'#b9b9b2',roughness:.49});
+  const plastic = new THREE.MeshPhysicalMaterial({color:'#e8e9e6',roughness:.31,metalness:0,clearcoat:.34,clearcoatRoughness:.32,reflectivity:.42});
+  const inside = new THREE.MeshStandardMaterial({color:'#aeb5b7',roughness:.54,metalness:.08});
   const black = new THREE.MeshStandardMaterial({color:'#171e22',roughness:.36,metalness:.12});
   const rubber = new THREE.MeshStandardMaterial({color:'#1e2425',roughness:.78});
   const steel = new THREE.MeshStandardMaterial({color:'#a6b0b7',roughness:.25,metalness:.9});
