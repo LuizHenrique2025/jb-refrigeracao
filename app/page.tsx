@@ -61,7 +61,7 @@ export default function Page() {
             </h1>
             <div className="hero-bottom">
               <p>
-                Instalação e manutenção de ar-condicionado.
+                Instalação e manutenção de ar-condicionado.{" "}
                 <br />
                 Cuidado em cada detalhe, do diagnóstico ao último ajuste.
               </p>

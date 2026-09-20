@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { ArrowDown, ArrowUpRight, RotateCcw, Move3D, Hand } from "lucide-react";
-import ComponentExplorer from './ComponentExplorer';
+import ComponentExplorer from "./ComponentExplorer";
 import { components } from "@/lib/content";
 const ACScene = dynamic(() => import("./ACScene"), {
   ssr: false,
@@ -32,7 +32,7 @@ function StaticView() {
   return (
     <div className="static-experience">
       <Image
-        src="/references/unidade-interna.png"
+        src="/references/unidade-interna.webp"
         width={1659}
         height={948}
         alt="Unidade interna em vista explodida: filtros acima da serpentina, turbina, chassi, aleta e painel frontal abaixo."
@@ -99,13 +99,8 @@ export default function ACExperience() {
     };
   }, [section]);
   const simplified = reduced || !supported;
-  return (
-    <><section
-      ref={setSection}
-      id="tecnologia"
-      className={`experience ${simplified ? "is-static" : "is-interactive"}`}
-      aria-label="Tecnologia por dentro"
-    >
+  const content = (
+    <>
       <div className="experience-heading">
         <p className="eyebrow">PRECISÃO QUE VOCÊ PODE VER</p>
         <h2 data-experience-title>O conforto. Por dentro.</h2>
@@ -126,7 +121,28 @@ export default function ACExperience() {
               </div>
             )}
           </div>
-          <div className="model-toolbar"><span className="desktop-orbit-hint"><Move3D size={16}/> Arraste para girar em 360°</span><button className="touch-orbit-toggle" type="button" aria-pressed={touchRotation} onClick={()=>setTouchRotation(v=>!v)}><Hand size={16}/>{touchRotation?'Voltar à rolagem':'Girar com o toque'}</button><button type="button" onClick={()=>section?.dispatchEvent(new CustomEvent('ac-reset-view'))}><RotateCcw size={14}/> Vista inicial</button></div>
+          <div className="model-toolbar">
+            <span className="desktop-orbit-hint">
+              <Move3D size={16} /> Arraste para girar em 360°
+            </span>
+            <button
+              className="touch-orbit-toggle"
+              type="button"
+              aria-pressed={touchRotation}
+              onClick={() => setTouchRotation((v) => !v)}
+            >
+              <Hand size={16} />
+              {touchRotation ? "Voltar à rolagem" : "Girar com o toque"}
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                section?.dispatchEvent(new CustomEvent("ac-reset-view"))
+              }
+            >
+              <RotateCcw size={14} /> Vista inicial
+            </button>
+          </div>
           <div className="ac-scroll-hint" aria-hidden="true">
             <span>ROLE PARA DESMONTAR</span>
             <ArrowDown size={16} />
@@ -135,7 +151,9 @@ export default function ACExperience() {
             <span data-stage>01 / DESIGN INTEGRADO</span>
             <span>SPLIT / VISTA INTERATIVA</span>
           </div>
-          <a className="ac-continue" href="#componentes">Continuar pela experiência <ArrowDown size={15}/></a>
+          <a className="ac-continue" href="#componentes">
+            Continuar pela experiência <ArrowDown size={15} />
+          </a>
           <div className="ac-progress" aria-hidden="true">
             <div className="ac-progress-fill" />
           </div>
@@ -158,6 +176,20 @@ export default function ACExperience() {
           3D requer JavaScript.
         </p>
       </noscript>
-    </section><ComponentExplorer reduced={reduced} supported={supported}/></>
+    </>
+  );
+  return (
+    <>
+      <section
+        ref={setSection}
+        id="tecnologia"
+        className={`experience ${simplified ? "is-static" : "is-interactive"}`}
+        aria-label="Tecnologia por dentro"
+      >
+        {/* The section is tall on purpose: the stage sticks while the visitor scrolls through the extra height. */}
+        {simplified ? content : <div className="experience-stage">{content}</div>}
+      </section>
+      <ComponentExplorer reduced={reduced} supported={supported} />
+    </>
   );
 }

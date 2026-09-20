@@ -1,5 +1,39 @@
-export const whatsapp =
-  "https://wa.me/554598539211?text=Ol%C3%A1%2C%20Jo%C3%A3o!%20Vim%20pelo%20site%20da%20JB%20Refrigera%C3%A7%C3%A3o%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento.";
+// Single source of truth for the contact number. Confirm with the client before publishing (see docs/DEVELOPMENT.md).
+export const WHATSAPP_NUMBER = "554598539211";
+
+export function whatsappUrl(text: string): string {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
+export const whatsapp = whatsappUrl(
+  "Olá, João! Vim pelo site da JB Refrigeração e gostaria de solicitar um orçamento.",
+);
+
+export const FORM_LIMITS = { name: 80, type: 60, message: 600 } as const;
+
+type ContactFields = {
+  name: string;
+  service: string;
+  type: string;
+  message: string;
+};
+
+/** Builds the WhatsApp text, leaving out whatever the visitor did not fill in. */
+export function contactMessage({ name, service, type, message }: ContactFields): string {
+  const clean = (value: string, max: number) => value.trim().slice(0, max);
+  const who = clean(name, FORM_LIMITS.name);
+  const kind = clean(type, FORM_LIMITS.type);
+  const details = clean(message, FORM_LIMITS.message);
+  return [
+    who ? `Olá, João! Meu nome é ${who}.` : "Olá, João!",
+    kind
+      ? `Preciso de ${service} para um ambiente ${kind}.`
+      : `Preciso de ${service}.`,
+    details,
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
 export const components = [
   {
     name: "Filter_Left",

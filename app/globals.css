@@ -520,9 +520,22 @@ em {
   }
 }
 .is-interactive {
-  height: 100svh;
-  min-height: 620px;
-  max-height: 1100px;
+  /* One stage of viewport height, plus extra height that becomes the scroll distance of the animation. */
+  --exp-h: clamp(620px, 100svh, 1100px);
+  --exp-scroll: 1800px;
+  height: calc(var(--exp-h) + var(--exp-scroll));
+  min-height: 0;
+  max-height: none;
+  /* overflow must stay visible: a clipped ancestor becomes the sticky scroll container and breaks the stage. */
+  overflow: visible;
+  background: none;
+}
+.experience-stage {
+  position: sticky;
+  top: 0;
+  height: var(--exp-h);
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 35%, #fff 0%, #f3f5f7 62%, #e9edf1 100%);
 }
 .ac-canvas {
   position: absolute;
@@ -720,9 +733,8 @@ em {
 }
 @media (max-width: 600px) {
   .is-interactive {
-    height: 100svh;
-    min-height: 610px;
-    max-height: 900px;
+    --exp-h: clamp(610px, 100svh, 900px);
+    --exp-scroll: 1500px;
   }
   .ac-canvas {
     inset: 60px 0 110px;
@@ -794,16 +806,19 @@ em {
 }
 
 /* Product stage: assembly and component study are separate experiences. */
-.experience{background:radial-gradient(ellipse at 50% 35%,#fff 0%,#f3f5f7 62%,#e9edf1 100%)}
+.is-static{background:radial-gradient(ellipse at 50% 35%,#fff 0%,#f3f5f7 62%,#e9edf1 100%)}
 .experience-heading h2{font-size:clamp(34px,4.3vw,62px);font-weight:500;letter-spacing:-2.5px}
 .experience-heading{padding-top:45px}.ac-canvas{inset:165px 20px 102px}.ac-scroll-hint{bottom:46px;right:50px}.ac-bottom{bottom:24px}.model-toolbar{position:absolute;bottom:75px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:22px;z-index:6;background:rgba(255,255,255,.85);border:1px solid #dce2e8;padding:10px 16px;border-radius:30px;backdrop-filter:blur(12px);white-space:nowrap}.model-toolbar span,.model-toolbar button{display:flex;align-items:center;gap:8px;font-size:12px;color:#4d6174}.model-toolbar button{background:none;border:0;cursor:pointer}.model-toolbar button:hover{color:var(--blue)}.model-toolbar button:last-child{border-left:1px solid #d5dde5;padding-left:18px}.model-toolbar .touch-orbit-toggle{display:none}.component-explorer{padding:100px 0 110px}.component-intro{display:grid;grid-template-columns:1fr 1fr;column-gap:80px;align-items:end;margin-bottom:50px}.component-intro .eyebrow{grid-column:1/-1}.component-intro h2{font-size:clamp(35px,3.5vw,49px);line-height:1.15;letter-spacing:-1.7px;font-weight:500}.component-intro h2 span{color:#77828e}.component-intro>p:last-child{color:var(--muted);max-width:300px;justify-self:end}.component-layout{display:grid;grid-template-columns:340px 1fr;gap:60px}.component-tabs{display:flex;flex-direction:column;border-top:1px solid var(--line)}.component-tabs button{padding:24px 0;display:flex;align-items:center;gap:16px;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;color:#76818b;font-size:17px;cursor:pointer;transition:color .2s}.component-tabs button span{font-size:11px;font-variant-numeric:tabular-nums;letter-spacing:1px}.component-tabs button svg{margin-left:auto;opacity:0}.component-tabs button[aria-selected=true]{color:var(--blue)}.component-tabs button[aria-selected=true] svg{opacity:1}.component-tabs button:hover{color:var(--ink)}.part-visual{height:350px;position:relative;background:radial-gradient(ellipse at 50% 25%,#fff,#edf1f5);border-radius:4px;overflow:hidden}.part-caption{position:absolute;bottom:18px;left:23px;font-size:10px;letter-spacing:1.5px;color:#617080;pointer-events:none}.part-reset{position:absolute;bottom:15px;right:20px;border:0;background:transparent;cursor:pointer;color:#617080;padding:6px}.part-description{padding:27px 0;display:grid;grid-template-columns:1fr 1.35fr;gap:8px 24px}.part-description h3{font-size:23px;font-weight:500;line-height:1.2;letter-spacing:-.6px}.part-description p{font-size:15px;color:var(--muted);line-height:1.6}.part-description>span{grid-column:2;font-size:11px;color:#788a9a;margin-top:10px}.part-static-number{display:flex;align-items:center;justify-content:center;height:100%;font-size:140px;font-weight:300;color:#bdc9d6}.ac-canvas canvas{cursor:grab}.ac-canvas canvas:active,.part-visual canvas:active{cursor:grabbing}.part-visual canvas{cursor:grab}
 @media(pointer:coarse){.model-toolbar .touch-orbit-toggle{display:flex}.model-toolbar .desktop-orbit-hint{display:none}}
 @media(max-width:900px){.component-layout{grid-template-columns:270px 1fr;gap:30px}.component-tabs button{font-size:15px}.part-description{grid-template-columns:1fr}.part-description>span{grid-column:1}.ac-canvas{inset:155px 0 100px}.model-toolbar{bottom:75px}}
 @media(max-width:600px){.experience-heading{padding:57px 20px 0}.experience-heading h2{font-size:35px;letter-spacing:-1.3px}.experience-heading>p:last-child{font-size:13px}.ac-canvas{inset:165px 0 130px}.model-toolbar{padding:10px 12px;gap:12px;bottom:75px}.model-toolbar span,.model-toolbar button{font-size:11px}.model-toolbar button:last-child{padding-left:12px}.component-explorer{padding:65px 0}.component-intro{display:block;margin-bottom:30px}.component-intro h2{font-size:35px}.component-intro>p:last-child{margin-top:20px;font-size:15px}.component-layout{display:flex;flex-direction:column;gap:25px}.component-tabs button{padding:15px 0;font-size:16px}.part-visual{height:285px}.part-description{padding:20px 0;gap:12px}.part-description h3{font-size:23px}.part-description p{font-size:14px}.ac-bottom{font-size:8px}}
-@media(max-height:600px) and (min-width:601px){.is-interactive{min-height:0;height:100svh}.experience-heading{padding-top:20px}.experience-heading h2{font-size:30px;letter-spacing:-1px}.experience-heading .eyebrow{display:none}.experience-heading>p:last-child{font-size:12px;margin-top:6px}.ac-canvas{inset:90px 0 65px}.model-toolbar{bottom:38px;padding:6px 13px}.ac-bottom{bottom:10px}.ac-scroll-hint{display:none}}
+@media(max-height:600px) and (min-width:601px){.is-interactive{--exp-h:100svh}.experience-heading{padding-top:20px}.experience-heading h2{font-size:30px;letter-spacing:-1px}.experience-heading .eyebrow{display:none}.experience-heading>p:last-child{font-size:12px;margin-top:6px}.ac-canvas{inset:90px 0 65px}.model-toolbar{bottom:38px;padding:6px 13px}.ac-bottom{bottom:10px}.ac-scroll-hint{display:none}}
 .network-lines{stroke:#8eb8ed}.network-nodes{fill:#2877d0}.network-nodes circle{filter:drop-shadow(0 0 3px rgba(7,93,204,.35))}
-.ac-canvas canvas{touch-action:pan-y pinch-zoom}.ac-continue{position:absolute;right:50px;bottom:72px;display:flex;align-items:center;gap:7px;color:var(--blue);font-size:11px;letter-spacing:.7px;z-index:6;opacity:0;pointer-events:none;transition:opacity .25s}.experience[data-scroll-complete] .ac-continue{opacity:1;pointer-events:auto}.experience[data-scroll-complete] .ac-scroll-hint{opacity:0}@media(max-width:600px){.ac-continue{right:20px;bottom:106px;font-size:10px}}
-.experience[data-scroll-complete] .ac-canvas{pointer-events:none}.experience[data-scroll-complete] .model-toolbar{pointer-events:none;opacity:.55}
+.ac-continue{position:absolute;right:50px;bottom:72px;display:flex;align-items:center;gap:7px;color:var(--blue);font-size:11px;letter-spacing:.7px;z-index:6;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}.experience[data-scroll-complete] .ac-continue{opacity:1;visibility:visible;pointer-events:auto}.experience[data-scroll-complete] .ac-scroll-hint{opacity:0}@media(max-width:600px){.ac-continue{right:20px;bottom:106px;font-size:10px}}
 
-.experience[data-scroll-complete]{position:relative!important;inset:auto!important;top:auto!important;left:auto!important;width:100%!important;max-width:none!important;height:auto!important;max-height:none!important;transform:none!important;}
-
+/* Without JS or with reduced motion there is no animation to scroll through, so reserve no extra height. */
+@media (scripting: none), (prefers-reduced-motion: reduce) {
+  .is-interactive {
+    --exp-scroll: 0px;
+  }
+}

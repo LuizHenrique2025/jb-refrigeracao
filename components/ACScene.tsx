@@ -1,5 +1,12 @@
 "use client";
-import { Component, Suspense, useEffect, useRef, type ReactNode } from "react";
+import {
+  Component,
+  Suspense,
+  useEffect,
+  useRef,
+  type ComponentRef,
+  type ReactNode,
+} from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from "three";
@@ -24,6 +31,15 @@ function SceneContents({ section, touchRotation }: { section: HTMLElement; touch
   const root = useRef<THREE.Group>(null);
   const light = useRef<THREE.DirectionalLight>(null);
   const { camera, size, invalidate, gl } = useThree();
+  const orbit = useRef<ComponentRef<typeof OrbitControls>>(null);
+  const rotationEnabled =
+    touchRotation || !window.matchMedia("(pointer: coarse)").matches;
+  // OrbitControls forces `touch-action: none` on the element it attaches to (R3F's wrapper div, not the
+  // <canvas>), which stops the page from scrolling under a swipe. Only take over touch when rotation is on.
+  useEffect(() => {
+    const target = orbit.current?.domElement as HTMLElement | undefined;
+    if (target) target.style.touchAction = rotationEnabled ? "none" : "pan-y";
+  }, [rotationEnabled]);
   useEffect(() => {
     let cleanup: (() => void) | undefined;
     let frame = 0;
@@ -89,7 +105,7 @@ function SceneContents({ section, touchRotation }: { section: HTMLElement; touch
         <planeGeometry args={[70, 70]} />
         <shadowMaterial opacity={0.1} />
       </mesh>
-      <OrbitControls makeDefault enablePan={false} enableZoom={false} enableDamping={false} rotateSpeed={.65} minPolarAngle={.15} maxPolarAngle={Math.PI-.15} enabled={touchRotation || !window.matchMedia('(pointer: coarse)').matches} onChange={()=>{section.setAttribute('data-orbit',camera.position.toArray().map(n=>n.toFixed(2)).join(','));invalidate();}} />
+      <OrbitControls ref={orbit} makeDefault enablePan={false} enableZoom={false} enableDamping={false} rotateSpeed={.65} minPolarAngle={.15} maxPolarAngle={Math.PI-.15} enabled={rotationEnabled} onChange={()=>{section.setAttribute('data-orbit',camera.position.toArray().map(n=>n.toFixed(2)).join(','));invalidate();}} />
     </>
   );
 }

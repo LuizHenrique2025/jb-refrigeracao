@@ -35,7 +35,7 @@ A busca usa `getObjectByName`, nunca índices. O carregador valida os nomes e re
 - Meshopt é suportado por useGLTF; preservar nomes e hierarquia na otimização. Draco pode reduzir transporte, mas adiciona decodificação; medir em celular antes de adotar. Para deployment sem dependência de CDN, hospedar os decodificadores localmente e configurar o caminho.
 - O mock usa materiais PBR sem texturas e instâncias para as aletas da serpentina e grades. Evitar texturas maiores que 1024 px; KTX2 exige configurar o transcoder e medir compatibilidade antes de usar.
 - DPR máximo 1.5. Sombras dinâmicas desativadas abaixo de 640 px. Renderização sob demanda: GSAP chama `invalidate`, sem estado React a cada scroll.
-- A cena é importada apenas quando a seção se aproxima da janela. Redução de movimento e ausência/perda de WebGL mostram imagem estática e descrições sem pin.
+- A cena é importada apenas quando a seção se aproxima da janela. Redução de movimento e ausência/perda de WebGL mostram imagem estática e descrições, sem a seção fixa durante a rolagem.
 - Resize destrói a timeline, restaura transforms/materiais e reconstrói o enquadramento. GSAP controla as mesmas posições ao avançar e retroceder.
 
 ## Validação manual após substituir o modelo
