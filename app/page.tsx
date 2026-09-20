@@ -12,6 +12,7 @@ import {
 import { whatsapp } from "@/lib/content";
 import ACExperience from "@/components/ACExperience";
 import ContactForm from "@/components/ContactForm";
+import NetworkBackdrop from "@/components/NetworkBackdrop";
 export default function Page() {
   return (
     <>
@@ -45,7 +46,7 @@ export default function Page() {
         </a>
       </header>
       <main id="conteudo">
-        <section className="hero wrap" id="inicio">
+        <section className="hero wrap" id="inicio"><NetworkBackdrop />
           <div className="hero-meta">
             <span>
               <MapPin size={14} /> FOZ DO IGUAÇU E REGIÃO
