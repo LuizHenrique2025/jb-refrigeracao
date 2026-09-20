@@ -23,3 +23,4 @@ export function createACAnimation({root,camera,section,invalidate,width,height}:
  const front=parts.find(p=>p.name==='Panel_Front');if(front)timeline.to(front.object.rotation,{x:-.12,duration:.28},.15);
  update();ScrollTrigger.refresh();return()=>{section.removeEventListener('ac-reset-view',reset);timeline.scrollTrigger?.kill();timeline.kill();for(const p of parts){p.object.position.copy(p.position);p.object.rotation.copy(p.rotation);}};
 }
+
