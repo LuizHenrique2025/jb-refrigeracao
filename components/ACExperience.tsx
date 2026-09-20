@@ -98,18 +98,6 @@ export default function ACExperience() {
       element.removeEventListener("ac-context-lost", lost);
     };
   }, [section]);
-  useEffect(() => {
-    const element = section;
-    if (!element) return;
-    const continuePage = (event: WheelEvent) => {
-      if (element.dataset.scrollComplete !== "true" || event.deltaY <= 0) return;
-      // ScrollTrigger has reached its end. Forward this wheel gesture so the
-      // document can leave the pinned scene instead of feeling locked.
-      requestAnimationFrame(() => window.scrollBy({ top: event.deltaY, left: 0, behavior: "auto" }));
-    };
-    element.addEventListener("wheel", continuePage, { passive: true, capture: true });
-    return () => element.removeEventListener("wheel", continuePage, true);
-  }, [section]);
   const simplified = reduced || !supported;
   return (
     <><section
