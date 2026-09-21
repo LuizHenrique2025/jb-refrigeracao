@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { ArrowDown, ArrowUpRight, RotateCcw, Move3D, Hand } from "lucide-react";
-import ComponentExplorer from "./ComponentExplorer";
+
 import { components } from "@/lib/content";
 const ACScene = dynamic(() => import("./ACScene"), {
   ssr: false,
@@ -151,12 +151,9 @@ export default function ACExperience() {
             <span data-stage>01 / DESIGN INTEGRADO</span>
             <span>SPLIT / VISTA INTERATIVA</span>
           </div>
-          <a className="ac-continue" href="#componentes">
-            Continuar pela experiência <ArrowDown size={15} />
+          <a className="ac-continue" href="#servicos">
+            Conhecer os serviços <ArrowDown size={15} />
           </a>
-          <div className="ac-progress" aria-hidden="true">
-            <div className="ac-progress-fill" />
-          </div>
           <div className="sr-only">
             <h3>Componentes do ar-condicionado</h3>
             {components.map((c) => (
@@ -189,7 +186,9 @@ export default function ACExperience() {
         {/* The section is tall on purpose: the stage sticks while the visitor scrolls through the extra height. */}
         {simplified ? content : <div className="experience-stage">{content}</div>}
       </section>
-      <ComponentExplorer reduced={reduced} supported={supported} />
+      
     </>
   );
 }
+
+

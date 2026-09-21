@@ -1,7 +1,8 @@
+import Image from "next/image";
 import {
   ArrowUpRight,
   ArrowDown,
-  Snowflake,
+
   Wind,
   Wrench,
   Factory,
@@ -13,6 +14,7 @@ import { whatsapp } from "@/lib/content";
 import ACExperience from "@/components/ACExperience";
 import ContactForm from "@/components/ContactForm";
 import NetworkBackdrop from "@/components/NetworkBackdrop";
+import ServiceGallery from "@/components/ServiceGallery";
 export default function Page() {
   return (
     <>
@@ -25,25 +27,13 @@ export default function Page() {
           href="#inicio"
           aria-label="JB Refrigeração, início"
         >
-          <Snowflake aria-hidden="true" />
-          <span>
-            <b>JB</b>
-            <span>REFRIGERAÇÃO</span>
-          </span>
+          <Image className="brand-logo" src="/logo-jb.png" width={1254} height={1254} alt="JB Ar Condicionado e Manutenções" />
         </a>
         <nav aria-label="Navegação principal">
           <a href="#servicos">Serviços</a>
           <a href="#tecnologia">Tecnologia</a>
           <a href="#sobre">Sobre a JB</a>
         </nav>
-        <a
-          className="header-cta"
-          href={whatsapp}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Fale com o João <ArrowUpRight size={17} />
-        </a>
       </header>
       <main id="conteudo">
         <section className="hero wrap" id="inicio"><NetworkBackdrop />
@@ -81,6 +71,7 @@ export default function Page() {
           </a>
         </section>
         <ACExperience />
+        <ServiceGallery />
         <section className="services wrap" id="servicos">
           <div className="section-heading">
             <p className="eyebrow">01 / O QUE FAZEMOS</p>
@@ -167,16 +158,12 @@ export default function Page() {
         </section>
       </main>
       <footer className="wrap footer">
-        <a className="brand" href="#inicio">
-          <Snowflake />
-          <span>
-            <b>JB</b>
-            <span>REFRIGERAÇÃO</span>
-          </span>
-        </a>
         <span>Foz do Iguaçu · Paraná</span>
         <span>© {new Date().getFullYear()} JB Refrigeração</span>
       </footer>
     </>
   );
 }
+
+
+
